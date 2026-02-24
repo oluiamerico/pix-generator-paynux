@@ -17,7 +17,8 @@ export interface PixResponse {
 
 export const generatePix = async (data: PixRequest): Promise<PixResponse> => {
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+    // Ensure there is no trailing slash in the API_URL environment variable to avoid `//` 301 redirects
+    const API_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080').replace(/\/$/, "");
     const response = await fetch(`${API_URL}/api/pix/generate`, {
         method: 'POST',
         headers: {
